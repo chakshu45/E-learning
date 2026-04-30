@@ -24,7 +24,7 @@ const seedData = async () => {
 
         // Create Instructor
         const instructor = await User.create({
-            name: 'Anuj Bhaiya',
+            name: 'Learn With Sky',
             email: 'anuj@learnwithsky.com',
             password: 'password123',
             role: 'instructor'

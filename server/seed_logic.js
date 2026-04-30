@@ -11,11 +11,13 @@ const seedData = async () => {
 
         // Create Instructor
         const instructor = await User.create({
-            name: 'Anuj Bhaiya',
+            name: 'Learn With Sky',
             email: 'anuj@learnwithsky.com',
             password: 'password123',
-            role: 'instructor'
+            role: 'instructor',
+            profileImage: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400'
         });
+
 
         // Java Course
         const javaCourse = await Course.create({

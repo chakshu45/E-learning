@@ -51,7 +51,8 @@ const CertificateModal: React.FC<CertificateModalProps> = ({ courseTitle, studen
                             </div>
                             <div className="text-right border-t-2 border-slate-200 dark:border-slate-800 pt-4 w-48">
                                 <p className="text-xs font-black uppercase tracking-widest text-slate-400">Instructor Signature</p>
-                                <p className="font-serif text-xl text-slate-900 dark:text-white italic">Anuj Bhaiya</p>
+                                <p className="font-serif text-xl text-slate-900 dark:text-white italic">Learn With Sky</p>
+
                             </div>
                         </div>
                     </div>
