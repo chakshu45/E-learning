@@ -32,7 +32,8 @@ export default function Home() {
             >
               Unlock Your <br />
               <span className="text-gradient">Infinite Potential.</span>
-            </h1 >
+            </motion.h1>
+
             
             <motion.p 
               initial={{ opacity: 0, y: 30 }}
