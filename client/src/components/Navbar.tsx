@@ -24,7 +24,9 @@ const Navbar = () => {
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-8">
                         <Link href="/courses" className="text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-colors">Courses</Link>
+                        <Link href="/subjects/devops-cloud" className="text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-colors">Study Material</Link>
                         <Link href="/dashboard" className="text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-colors">Dashboard</Link>
+
                         <Link href="/login" className="px-4 py-2 text-indigo-600 font-medium hover:bg-indigo-50 rounded-lg transition-all">Login</Link>
                         <Link href="/register" className="px-5 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 shadow-md shadow-indigo-500/20 transition-all">
                             Join Free
@@ -51,7 +53,9 @@ const Navbar = () => {
                 <div className="md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 animate-in slide-in-from-top duration-300">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                         <Link href="/courses" className="block px-3 py-2 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-600 rounded-md">Courses</Link>
+                        <Link href="/subjects/devops-cloud" className="block px-3 py-2 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-600 rounded-md">Study Material</Link>
                         <Link href="/dashboard" className="block px-3 py-2 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-600 rounded-md">Dashboard</Link>
+
                         <Link href="/login" className="block px-3 py-2 text-indigo-600 font-medium">Login</Link>
                         <Link href="/register" className="block px-3 py-2 bg-indigo-600 text-white rounded-md text-center">Join Free</Link>
                     </div>
