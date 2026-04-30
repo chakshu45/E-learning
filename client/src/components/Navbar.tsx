@@ -25,7 +25,9 @@ const Navbar = () => {
                     <div className="hidden md:flex items-center space-x-10">
                         <Link href="/courses" className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-all">Courses</Link>
                         <Link href="/subjects/devops-cloud" className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-all">Study Material</Link>
+                        <Link href="/practice" className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-all">Practice</Link>
                         <Link href="/dashboard" className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-all">Dashboard</Link>
+
                         <div className="h-6 w-px bg-slate-200 dark:bg-slate-800"></div>
                         <Link href="/login" className="text-sm font-bold text-slate-900 dark:text-white hover:text-indigo-600 transition-all">Login</Link>
                         <Link href="/register" className="px-8 py-3 bg-indigo-600 text-white text-sm font-bold rounded-2xl hover:bg-indigo-700 shadow-xl shadow-indigo-500/20 transition-all transform hover:scale-105 btn-glow">
@@ -55,7 +57,9 @@ const Navbar = () => {
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                         <Link href="/courses" className="block px-3 py-2 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-600 rounded-md">Courses</Link>
                         <Link href="/subjects/devops-cloud" className="block px-3 py-2 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-600 rounded-md">Study Material</Link>
+                        <Link href="/practice" className="block px-3 py-2 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-600 rounded-md">Practice</Link>
                         <Link href="/dashboard" className="block px-3 py-2 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 hover:text-indigo-600 rounded-md">Dashboard</Link>
+
 
                         <Link href="/login" className="block px-3 py-2 text-indigo-600 font-medium">Login</Link>
                         <Link href="/register" className="block px-3 py-2 bg-indigo-600 text-white rounded-md text-center">Join Free</Link>
