@@ -7,31 +7,32 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <nav className="fixed w-full z-50 top-0 left-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <nav className="fixed w-full z-50 top-0 left-0 glass-panel">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between h-16 items-center">
+                <div className="flex justify-between h-20 items-center">
                     <div className="flex items-center">
-                        <Link href="/" className="flex items-center space-x-2">
-                            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-xl">L</span>
+                        <Link href="/" className="flex items-center space-x-3 group">
+                            <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-500 shadow-lg shadow-indigo-500/30">
+                                <span className="text-white font-black text-2xl">S</span>
                             </div>
-                            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600">
+                            <span className="text-2xl font-black tracking-tight text-gradient">
                                 LearnWithSky
                             </span>
                         </Link>
                     </div>
 
                     {/* Desktop Menu */}
-                    <div className="hidden md:flex items-center space-x-8">
-                        <Link href="/courses" className="text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-colors">Courses</Link>
-                        <Link href="/subjects/devops-cloud" className="text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-colors">Study Material</Link>
-                        <Link href="/dashboard" className="text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-colors">Dashboard</Link>
-
-                        <Link href="/login" className="px-4 py-2 text-indigo-600 font-medium hover:bg-indigo-50 rounded-lg transition-all">Login</Link>
-                        <Link href="/register" className="px-5 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 shadow-md shadow-indigo-500/20 transition-all">
+                    <div className="hidden md:flex items-center space-x-10">
+                        <Link href="/courses" className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-all">Courses</Link>
+                        <Link href="/subjects/devops-cloud" className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-all">Study Material</Link>
+                        <Link href="/dashboard" className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-all">Dashboard</Link>
+                        <div className="h-6 w-px bg-slate-200 dark:bg-slate-800"></div>
+                        <Link href="/login" className="text-sm font-bold text-slate-900 dark:text-white hover:text-indigo-600 transition-all">Login</Link>
+                        <Link href="/register" className="px-8 py-3 bg-indigo-600 text-white text-sm font-bold rounded-2xl hover:bg-indigo-700 shadow-xl shadow-indigo-500/20 transition-all transform hover:scale-105 btn-glow">
                             Join Free
                         </Link>
                     </div>
+
 
                     {/* Mobile Button */}
                     <div className="md:hidden flex items-center">
