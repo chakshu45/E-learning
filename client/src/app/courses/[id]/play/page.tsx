@@ -2,19 +2,31 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { fetchData } from "@/utils/api";
+import CertificateModal from "@/components/CertificateModal";
 
 export default function PlayCoursePage({ params }: { params: { id: string } }) {
     const [lessons, setLessons] = useState<any[]>([]);
     const [currentLessonIdx, setCurrentLessonIdx] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [showCertificate, setShowCertificate] = useState(false);
+    const [user, setUser] = useState<any>(null);
+
 
     useEffect(() => {
         const getLessons = async () => {
             try {
                 const data = await fetchData(`/lessons/course/${params.id}`);
                 setLessons(data);
+                
+                // Mock user for certificate
+                const storedUser = localStorage.getItem('userInfo');
+                if (storedUser) setUser(JSON.parse(storedUser));
+                else setUser({ name: "Premium Learner" });
+
                 // In a real app, we would also fetch the current enrollment to see progress
+
             } catch (error) {
                 console.error(error);
             } finally {
@@ -94,14 +106,47 @@ export default function PlayCoursePage({ params }: { params: { id: string } }) {
                         </div>
                     </div>
 
-                    <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-100 dark:border-slate-700">
-                        <h2 className="text-xl font-bold mb-4 text-slate-900 dark:text-white">Lesson Notes</h2>
-                        <div className="text-slate-600 dark:text-slate-400 leading-relaxed whitespace-pre-line">
-                            {currentLesson.content || "No notes available for this lesson."}
+                    <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-100 dark:border-slate-700 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div className="flex-1">
+                            <h2 className="text-xl font-bold mb-2 text-slate-900 dark:text-white">Lesson Notes</h2>
+                            <div className="text-slate-600 dark:text-slate-400 leading-relaxed whitespace-pre-line text-sm">
+                                {currentLesson.content || "Welcome to this module. Key takeaways: Master the core concepts, practice with the provided code snippets, and don't forget to take the quiz at the end of the section."}
+                            </div>
                         </div>
+                        
+                        {currentLessonIdx === lessons.length - 1 && (
+                            <motion.div 
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="bg-gradient-to-br from-indigo-600 to-violet-700 p-8 rounded-2xl text-white text-center md:w-80 shadow-xl shadow-indigo-500/30"
+                            >
+                                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10.394 2.827a1 1 0 00-.788 0l-7 3a1 1 0 000 1.848l7 3a1 1 0 00.788 0l7-3a1 1 0 000-1.848l-7-3zM3.94 6.333l5.06 2.169 5.06-2.169-5.06-2.169-5.06 2.169zM4.033 11.456L10 14.012l5.967-2.556A1 1 0 0118 12.394V15a1 1 0 01-.606.92l-7 3a1 1 0 01-.788 0l-7-3A1 1 0 012 15v-2.606a1 1 0 011.033-.938z" />
+                                    </svg>
+                                </div>
+                                <h3 className="font-bold mb-2">You've finished!</h3>
+                                <p className="text-xs text-indigo-100 mb-6">Congratulations on completing the curriculum. Your premium certificate is ready.</p>
+                                <button 
+                                    onClick={() => setShowCertificate(true)}
+                                    className="w-full py-3 bg-white text-indigo-600 rounded-xl font-bold text-sm hover:bg-indigo-50 transition-all shadow-lg"
+                                >
+                                    Claim Certificate
+                                </button>
+                            </motion.div>
+                        )}
                     </div>
                 </div>
             </div>
+
+            {showCertificate && (
+                <CertificateModal 
+                    courseTitle={lessons[0]?.course?.title || "Premium E-Learning Course"}
+                    studentName={user?.name || "Premium Learner"}
+                    onClose={() => setShowCertificate(false)}
+                />
+            )}
+
 
             {/* Curriculum Sidebar */}
             <div className="w-full lg:w-96 bg-white dark:bg-slate-800 border-l border-slate-200 dark:border-slate-700 overflow-y-auto h-[50vh] lg:h-[calc(100vh-4rem)] sticky top-16">
