@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { fetchData } from "@/utils/api";
 import CertificateModal from "@/components/CertificateModal";
 
-export default function PlayCoursePage({ params }: { params: { id: string } }) {
+export default function PlayCoursePage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
+    const params = use(paramsPromise);
     const [lessons, setLessons] = useState<any[]>([]);
+
     const [currentLessonIdx, setCurrentLessonIdx] = useState(0);
     const [loading, setLoading] = useState(true);
     const [showCertificate, setShowCertificate] = useState(false);

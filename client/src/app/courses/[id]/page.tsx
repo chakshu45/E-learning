@@ -1,16 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import Link from "next/link";
 import { fetchData } from "@/utils/api";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
-export default function CourseDetailPage({ params }: { params: { id: string } }) {
+export default function CourseDetailPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
+    const params = use(paramsPromise);
     const { user } = useAuth();
     const router = useRouter();
     const [course, setCourse] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         const getCourse = async () => {
@@ -86,9 +88,12 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
                         <div className="relative bg-slate-800 rounded-2xl overflow-hidden shadow-2xl border border-slate-700 p-6">
                             <img src={course.thumbnail || "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800"} alt="Course" className="rounded-xl mb-6" />
                             <div className="flex items-center justify-between mb-6">
-                                <span className="text-4xl font-black">${course.price}</span>
-                                <span className="text-slate-400 line-through">${(course.price * 1.5).toFixed(2)}</span>
+                                <span className="text-4xl font-black">₹{course.price}</span>
+                                {course.originalPrice && (
+                                    <span className="text-slate-400 line-through text-lg">₹{course.originalPrice}</span>
+                                )}
                             </div>
+
                             <button 
                                 onClick={handleEnroll}
                                 className="w-full btn-primary py-4 text-xl mb-4"
