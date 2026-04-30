@@ -1,26 +1,13 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
 const User = require('./models/User');
 const Course = require('./models/Course');
 const Lesson = require('./models/Lesson');
 
 const seedData = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI);
-        console.log('Seed: Connected to DB');
-
         // Clear existing data
         await User.deleteMany();
         await Course.deleteMany();
         await Lesson.deleteMany();
-
-        // Create Admin
-        const admin = await User.create({
-            name: 'Admin User',
-            email: 'admin@learnwithsky.com',
-            password: 'password123',
-            role: 'admin'
-        });
 
         // Create Instructor
         const instructor = await User.create({
@@ -86,20 +73,16 @@ const seedData = async () => {
             isPublished: true
         });
 
-        // Create some lessons for one course as sample
+        // Create some lessons as sample
         await Lesson.create([
             { course: javaCourse._id, title: 'Introduction to Java', videoUrl: 'https://youtube.com/watch?v=java1', order: 1, duration: '15:00' },
-            { course: javaCourse._id, title: 'Installing JDK & IntelliJ', videoUrl: 'https://youtube.com/watch?v=java2', order: 2, duration: '20:00' },
             { course: dsaCourse._id, title: 'Time Complexity Analysis', videoUrl: 'https://youtube.com/watch?v=dsa1', order: 1, duration: '45:00' }
         ]);
 
-
-        console.log('Data Seeded Successfully');
-        process.exit();
+        console.log('Auto-Seed: Data Seeded Successfully');
     } catch (error) {
-        console.error(`Error: ${error.message}`);
-        process.exit(1);
+        console.error(`Auto-Seed Error: ${error.message}`);
     }
 };
 
-seedData();
+module.exports = seedData;

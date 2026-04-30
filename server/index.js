@@ -4,7 +4,17 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 
 // Connect to Database
-connectDB();
+connectDB().then(async () => {
+    // Auto-seed if using in-memory database and it's empty
+    const Course = require('./models/Course');
+    const count = await Course.countDocuments();
+    if (count === 0) {
+        console.log('Database empty, starting auto-seed...');
+        const seedData = require('./seed_logic'); // We'll move seed logic here
+        await seedData();
+    }
+});
+
 
 const app = express();
 

@@ -51,10 +51,12 @@ export default function CoursesPage() {
                             title={course.title}
                             instructor={course.instructor?.name || "Unknown"}
                             price={course.price}
+                            originalPrice={course.originalPrice}
                             thumbnail={course.thumbnail}
                             category={course.category}
                             rating={course.rating}
                         />
+
                     ))}
                 </div>
             )}

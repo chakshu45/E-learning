@@ -5,12 +5,15 @@ interface CourseCardProps {
     title: string;
     instructor: string;
     price: number;
+    originalPrice?: number;
     thumbnail: string;
     category: string;
     rating: number;
 }
 
-const CourseCard: React.FC<CourseCardProps> = ({ id, title, instructor, price, thumbnail, category, rating }) => {
+const CourseCard: React.FC<CourseCardProps> = ({ id, title, instructor, price, originalPrice, thumbnail, category, rating }) => {
+    const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
+
     return (
         <Link href={`/courses/${id}`} className="group block bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-100 dark:border-slate-700 hover:-translate-y-2">
             <div className="relative aspect-video overflow-hidden">
@@ -19,10 +22,15 @@ const CourseCard: React.FC<CourseCardProps> = ({ id, title, instructor, price, t
                     alt={title}
                     className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-indigo-600 text-white text-xs font-bold rounded-full uppercase tracking-wider">
+                <div className="absolute top-4 left-4 flex flex-col space-y-2">
+                    <span className="px-3 py-1 bg-indigo-600 text-white text-[10px] font-bold rounded-full uppercase tracking-wider w-fit">
                         {category}
                     </span>
+                    {discount > 0 && (
+                        <span className="px-3 py-1 bg-rose-500 text-white text-[10px] font-bold rounded-full uppercase tracking-wider w-fit">
+                            {discount}% OFF
+                        </span>
+                    )}
                 </div>
             </div>
             <div className="p-6">
@@ -39,12 +47,18 @@ const CourseCard: React.FC<CourseCardProps> = ({ id, title, instructor, price, t
                 </h3>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">by {instructor}</p>
                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-50 dark:border-slate-700">
-                    <span className="text-2xl font-black text-indigo-600">${price}</span>
+                    <div className="flex flex-col">
+                        <span className="text-2xl font-black text-indigo-600">₹{price}</span>
+                        {originalPrice && (
+                            <span className="text-xs text-slate-400 line-through">₹{originalPrice}</span>
+                        )}
+                    </div>
                     <span className="text-sm font-bold text-slate-900 dark:text-white group-hover:underline">View Course →</span>
                 </div>
             </div>
         </Link>
     );
 };
+
 
 export default CourseCard;
