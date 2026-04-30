@@ -23,9 +23,10 @@ export default function PlayCoursePage({ params: paramsPromise }: { params: Prom
                 setLessons(data);
                 
                 // Mock user for certificate
-                const storedUser = localStorage.getItem('userInfo');
+                const storedUser = localStorage.getItem('sky_user');
                 if (storedUser) setUser(JSON.parse(storedUser));
                 else setUser({ name: "Premium Learner" });
+
 
                 // In a real app, we would also fetch the current enrollment to see progress
 

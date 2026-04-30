@@ -1,7 +1,8 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 export const fetchData = async (endpoint: string, options: RequestInit = {}) => {
-    const token = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('lumina_user') || '{}')?.token : null;
+    const token = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('sky_user') || '{}')?.token : null;
+
     
     const headers = {
         'Content-Type': 'application/json',
