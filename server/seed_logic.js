@@ -77,8 +77,33 @@ const seedData = async () => {
 
         // Create some lessons as sample
         await Lesson.create([
-            { course: javaCourse._id, title: 'Introduction to Java', videoUrl: 'https://youtube.com/watch?v=java1', order: 1, duration: '15:00' },
-            { course: dsaCourse._id, title: 'Time Complexity Analysis', videoUrl: 'https://youtube.com/watch?v=dsa1', order: 1, duration: '45:00' }
+            { 
+                course: javaCourse._id, 
+                title: 'Introduction to Java Variables', 
+                videoUrl: 'https://www.youtube.com/embed/eIrMbAQSU34', 
+                order: 1, 
+                duration: '15:00',
+                challenge: {
+                    type: 'typing',
+                    question: 'Type the command to declare an integer variable named "x" and assign it the value 10.',
+                    codeTemplate: '// Type here...',
+                    correctAnswer: 'int x = 10;'
+                }
+            },
+            { 
+                course: javaCourse._id, 
+                title: 'Java Data Types', 
+                videoUrl: 'https://www.youtube.com/embed/9TlHvipP5yA', 
+                order: 2, 
+                duration: '20:00',
+                challenge: {
+                    type: 'typing',
+                    question: 'Declare a String variable named "name" and assign it the value "Sky".',
+                    codeTemplate: '// Type here...',
+                    correctAnswer: 'String name = "Sky";'
+                }
+            },
+            { course: dsaCourse._id, title: 'Time Complexity Analysis', videoUrl: 'https://www.youtube.com/embed/9TlHvipP5yA', order: 1, duration: '45:00' }
         ]);
 
         console.log('Auto-Seed: Data Seeded Successfully');

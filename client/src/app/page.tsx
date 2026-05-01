@@ -4,31 +4,69 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function Home() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" as any }
+    },
+  };
+
   return (
     <div className="relative overflow-hidden bg-white dark:bg-slate-950">
       {/* Decorative Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1000px] pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/10 blur-[120px] rounded-full animate-pulse"></div>
-        <div className="absolute top-[20%] right-[-10%] w-[30%] h-[30%] bg-violet-500/10 blur-[100px] rounded-full animate-pulse delay-700"></div>
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.2, 1],
+            rotate: [0, 90, 0],
+            opacity: [0.1, 0.2, 0.1]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/10 blur-[120px] rounded-full"
+        ></motion.div>
+        <motion.div 
+          animate={{ 
+            scale: [1.2, 1, 1.2],
+            rotate: [0, -90, 0],
+            opacity: [0.1, 0.15, 0.1]
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[20%] right-[-10%] w-[30%] h-[30%] bg-violet-500/10 blur-[100px] rounded-full"
+        ></motion.div>
       </div>
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-center"
+          >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-block px-4 py-1.5 mb-8 text-sm font-bold tracking-widest text-indigo-600 uppercase bg-indigo-50 dark:bg-indigo-900/30 rounded-full"
+              variants={itemVariants}
+              className="inline-block px-6 py-2 mb-8 text-sm font-black tracking-widest text-indigo-600 uppercase bg-indigo-50 dark:bg-indigo-900/30 rounded-full shadow-sm"
             >
               The Future of Learning is Here
             </motion.div>
             
             <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-6xl md:text-8xl font-black tracking-tight text-slate-900 dark:text-white leading-[0.9] mb-8"
+              variants={itemVariants}
+              className="text-6xl md:text-9xl font-black tracking-tight text-slate-900 dark:text-white leading-[0.85] mb-10"
             >
               Unlock Your <br />
               <span className="text-gradient">Infinite Potential.</span>
@@ -36,35 +74,31 @@ export default function Home() {
 
             
             <motion.p 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="max-w-2xl mx-auto text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-12 font-medium leading-relaxed"
+              variants={itemVariants}
+              className="max-w-2xl mx-auto text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-14 font-medium leading-relaxed"
             >
               Experience a premium education platform designed for the modern world. Master technology, design, and business with top-tier instructors.
             </motion.p>
 
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              variants={itemVariants}
               className="flex flex-col sm:flex-row justify-center items-center space-y-6 sm:space-y-0 sm:space-x-8"
             >
-              <Link href="/courses" className="group relative px-10 py-5 bg-indigo-600 text-white rounded-2xl font-bold text-lg hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-500/40 hover:-translate-y-1 btn-glow">
+              <Link href="/courses" className="group relative px-12 py-6 bg-indigo-600 text-white rounded-[2rem] font-bold text-xl hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-500/40 hover:-translate-y-2 btn-glow">
                 Explore Courses
               </Link>
-              <Link href="/register" className="px-10 py-5 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 rounded-2xl font-bold text-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-all hover:-translate-y-1">
+              <Link href="/register" className="px-12 py-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-slate-100 dark:border-slate-800 rounded-[2rem] font-bold text-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all hover:-translate-y-2">
                 Start Learning Free
               </Link>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 border-y border-slate-100 dark:border-slate-900">
+      <section className="py-24 border-y border-slate-100 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-900/20">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
             {[
               { label: "Active Students", value: "10M+" },
               { label: "Premium Courses", value: "1.2K+" },
@@ -73,13 +107,14 @@ export default function Home() {
             ].map((stat, i) => (
               <motion.div 
                 key={i}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
                 className="text-center"
               >
-                <div className="text-4xl font-black text-indigo-600 mb-2">{stat.value}</div>
-                <div className="text-sm font-bold text-slate-500 uppercase tracking-widest">{stat.label}</div>
+                <div className="text-5xl font-black text-indigo-600 mb-3">{stat.value}</div>
+                <div className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">{stat.label}</div>
               </motion.div>
             ))}
           </div>
@@ -87,8 +122,12 @@ export default function Home() {
       </section>
 
       {/* Features Grid */}
-      <section className="py-32">
+      <section className="py-40">
         <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-24">
+            <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Why Choose LearnWithSky?</h2>
+            <p className="text-slate-500 dark:text-slate-400 text-xl max-w-2xl mx-auto">We combine cutting-edge technology with world-class education to help you reach your goals.</p>
+          </div>
           <div className="grid md:grid-cols-3 gap-12">
             {[
               { 
@@ -124,16 +163,17 @@ export default function Home() {
             ].map((feature, idx) => (
               <motion.div 
                 key={idx} 
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
+                transition={{ delay: idx * 0.15, duration: 0.6 }}
+                whileHover={{ y: -10 }}
                 className="premium-card group"
               >
-                <div className={`w-16 h-16 ${feature.color} text-white rounded-2xl flex items-center justify-center mb-8 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+                <div className={`w-20 h-20 ${feature.color} text-white rounded-[1.5rem] flex items-center justify-center mb-10 shadow-2xl shadow-${feature.color.split('-')[1]}-500/30 group-hover:scale-110 transition-transform duration-500`}>
                   {feature.icon}
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white leading-tight">{feature.title}</h3>
+                <h3 className="text-3xl font-black mb-6 text-slate-900 dark:text-white leading-tight">{feature.title}</h3>
                 <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">{feature.desc}</p>
               </motion.div>
             ))}
@@ -143,3 +183,4 @@ export default function Home() {
     </div>
   );
 }
+

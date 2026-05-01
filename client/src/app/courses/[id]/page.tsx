@@ -116,23 +116,6 @@ export default function CourseDetailPage({ params: paramsPromise }: { params: Pr
                         </div>
                     </section>
                 </div>
-
-                {/* Sidebar - Instructor Info */}
-                <div className="space-y-12">
-                    <div className="p-8 bg-slate-50 dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700">
-                        <h3 className="text-xl font-bold mb-6 text-slate-900 dark:text-white">Your Instructor</h3>
-                        <div className="flex items-center space-x-4 mb-4">
-                            <img src={course.instructor?.profileImage || "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400"} alt={course.instructor?.name} className="w-16 h-16 rounded-full object-cover" />
-                            <div>
-                                <h4 className="font-bold text-slate-900 dark:text-white">{course.instructor?.name}</h4>
-                                <p className="text-sm text-slate-500">{course.instructor?.role}</p>
-                            </div>
-                        </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                            {course.instructor?.bio || "Expert instructor dedicated to your success."}
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
     );

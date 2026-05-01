@@ -2,9 +2,10 @@
 
 import { useEffect, useState, use } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { fetchData } from "@/utils/api";
 import CertificateModal from "@/components/CertificateModal";
+import MiniChallenge from "@/components/MiniChallenge";
 
 export default function PlayCoursePage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
     const params = use(paramsPromise);
@@ -13,6 +14,8 @@ export default function PlayCoursePage({ params: paramsPromise }: { params: Prom
     const [currentLessonIdx, setCurrentLessonIdx] = useState(0);
     const [loading, setLoading] = useState(true);
     const [showCertificate, setShowCertificate] = useState(false);
+    const [showChallenge, setShowChallenge] = useState(false);
+    const [pendingLessonIdx, setPendingLessonIdx] = useState<number | null>(null);
     const [user, setUser] = useState<any>(null);
 
 
@@ -22,13 +25,9 @@ export default function PlayCoursePage({ params: paramsPromise }: { params: Prom
                 const data = await fetchData(`/lessons/course/${params.id}`);
                 setLessons(data);
                 
-                // Mock user for certificate
                 const storedUser = localStorage.getItem('sky_user');
                 if (storedUser) setUser(JSON.parse(storedUser));
                 else setUser({ name: "Premium Learner" });
-
-
-                // In a real app, we would also fetch the current enrollment to see progress
 
             } catch (error) {
                 console.error(error);
@@ -40,10 +39,23 @@ export default function PlayCoursePage({ params: paramsPromise }: { params: Prom
     }, [params.id]);
 
     const handleLessonChange = async (idx: number) => {
+        // If moving forward, check for challenge in current lesson
+        if (idx > currentLessonIdx && lessons[currentLessonIdx].challenge) {
+            setPendingLessonIdx(idx);
+            setShowChallenge(true);
+            return;
+        }
+
         setCurrentLessonIdx(idx);
-        // Mock progress update - in real app we need the enrollment ID
-        // For simplicity, we just console log or call a placeholder
         console.log(`User watched lesson ${lessons[idx]._id}`);
+    };
+
+    const handleChallengeComplete = () => {
+        setShowChallenge(false);
+        if (pendingLessonIdx !== null) {
+            setCurrentLessonIdx(pendingLessonIdx);
+            setPendingLessonIdx(null);
+        }
     };
 
     if (loading) return (
@@ -141,6 +153,15 @@ export default function PlayCoursePage({ params: paramsPromise }: { params: Prom
                     </div>
                 </div>
             </div>
+
+            <AnimatePresence>
+                {showChallenge && lessons[currentLessonIdx]?.challenge && (
+                    <MiniChallenge 
+                        challenge={lessons[currentLessonIdx].challenge} 
+                        onComplete={handleChallengeComplete} 
+                    />
+                )}
+            </AnimatePresence>
 
             {showCertificate && (
                 <CertificateModal 
