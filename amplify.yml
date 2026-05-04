@@ -1,19 +1,11 @@
 version: 1
-frontend:
-  phases:
-    preBuild:
-      commands:
-        - nvm install 20
-        - nvm use 20
-        - cd client && npm install
-    build:
-      commands:
-        - cd client && npm run build
-  artifacts:
-    baseDirectory: client/.next
-    files:
-      - '**/*'
-  cache:
-    paths:
-      - client/node_modules/**/*
-      - node_modules/**/*
+applications:
+  - frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm install
+        build:
+          commands:
+            - npm run build
+    appRoot: client
