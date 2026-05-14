@@ -26,15 +26,25 @@ const Chatbot = () => {
         setInput("");
         setIsTyping(true);
 
-        // Mock AI Response
-        setTimeout(() => {
-            let response = "That's a great question! Based on your current course, I recommend looking into the next module on Advanced Patterns.";
-            if (input.toLowerCase().includes("java")) response = "Java is a great choice! Our Java Placement Bootcamp covers everything from JVM internals to Spring Boot.";
-            if (input.toLowerCase().includes("dsa")) response = "Mastering DSA is the key to MAANG interviews. Have you checked out our Graphs & DP modules yet?";
-            
-            setMessages(prev => [...prev, { role: "assistant", content: response }]);
+        try {
+            const response = await fetch("http://localhost:5000/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ message: input, history: messages }),
+            });
+
+            if (!response.ok) throw new Error("Failed to reach SkyAI");
+
+            const data = await response.json();
+            setMessages(prev => [...prev, { role: "assistant", content: data.reply }]);
+        } catch (error) {
+            console.error("Chat Error:", error);
+            setMessages(prev => [...prev, { role: "assistant", content: "I'm sorry, I'm having trouble connecting right now. Please try again later." }]);
+        } finally {
             setIsTyping(false);
-        }, 1500);
+        }
     };
 
     return (

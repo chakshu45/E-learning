@@ -9,47 +9,56 @@ export default function Home() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" as any }
+      filter: "blur(0px)",
+      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] }
     },
   };
 
   return (
-    <div className="relative overflow-hidden bg-white dark:bg-slate-950">
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1000px] pointer-events-none">
+    <div className="relative overflow-hidden bg-[#fdfdff] dark:bg-slate-950 min-h-screen">
+      {/* Dynamic Background Blobs */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none z-0">
         <motion.div 
           animate={{ 
-            scale: [1, 1.2, 1],
-            rotate: [0, 90, 0],
-            opacity: [0.1, 0.2, 0.1]
+            x: [0, 100, 0],
+            y: [0, 50, 0],
+            scale: [1, 1.1, 1],
           }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/10 blur-[120px] rounded-full"
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[10%] left-[5%] w-[500px] h-[500px] bg-indigo-400/20 blur-[120px] rounded-full"
         ></motion.div>
         <motion.div 
           animate={{ 
-            scale: [1.2, 1, 1.2],
-            rotate: [0, -90, 0],
-            opacity: [0.1, 0.15, 0.1]
+            x: [0, -80, 0],
+            y: [0, 100, 0],
+            scale: [1.1, 1, 1.1],
           }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[20%] right-[-10%] w-[30%] h-[30%] bg-violet-500/10 blur-[100px] rounded-full"
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[30%] right-[10%] w-[400px] h-[400px] bg-fuchsia-400/20 blur-[100px] rounded-full"
+        ></motion.div>
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.3, 1],
+            opacity: [0.1, 0.2, 0.1]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[10%] left-[20%] w-[600px] h-[600px] bg-cyan-400/10 blur-[150px] rounded-full"
         ></motion.div>
       </div>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32">
+      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             variants={containerVariants}
@@ -59,122 +68,121 @@ export default function Home() {
           >
             <motion.div
               variants={itemVariants}
-              className="inline-block px-6 py-2 mb-8 text-sm font-black tracking-widest text-indigo-600 uppercase bg-indigo-50 dark:bg-indigo-900/30 rounded-full shadow-sm"
+              className="inline-flex items-center space-x-2 px-6 py-2 mb-10 text-sm font-black tracking-widest text-indigo-600 uppercase bg-white dark:bg-slate-900 border border-indigo-100 dark:border-slate-800 rounded-full shadow-xl shadow-indigo-500/10"
             >
-              The Future of Learning is Here
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+              </span>
+              <span>Next Generation Learning</span>
             </motion.div>
             
             <motion.h1 
               variants={itemVariants}
-              className="text-6xl md:text-9xl font-black tracking-tight text-slate-900 dark:text-white leading-[0.85] mb-10"
+              className="text-7xl md:text-[10rem] font-black tracking-tight text-slate-900 dark:text-white leading-[0.8] mb-12"
             >
-              Unlock Your <br />
-              <span className="text-gradient">Infinite Potential.</span>
+              Master Your <br />
+              <span className="text-gradient">Future Now.</span>
             </motion.h1>
 
-            
             <motion.p 
               variants={itemVariants}
-              className="max-w-2xl mx-auto text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-14 font-medium leading-relaxed"
+              className="max-w-2xl mx-auto text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-16 font-medium leading-relaxed"
             >
-              Experience a premium education platform designed for the modern world. Master technology, design, and business with top-tier instructors.
+              Learn with the world's best instructors on a platform built for performance, creativity, and career growth.
             </motion.p>
 
             <motion.div 
               variants={itemVariants}
-              className="flex flex-col sm:flex-row justify-center items-center space-y-6 sm:space-y-0 sm:space-x-8"
+              className="flex flex-col sm:flex-row justify-center items-center gap-8"
             >
-              <Link href="/courses" className="group relative px-12 py-6 bg-indigo-600 text-white rounded-[2rem] font-bold text-xl hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-500/40 hover:-translate-y-2 btn-glow">
-                Explore Courses
+              <Link href="/courses" className="group relative px-14 py-7 bg-indigo-600 text-white rounded-[2.5rem] font-black text-xl overflow-hidden shadow-[0_20px_50px_-10px_rgba(79,70,229,0.5)] transition-all hover:scale-105 active:scale-95">
+                <span className="relative z-10">Explore All Courses</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-violet-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </Link>
-              <Link href="/register" className="px-12 py-6 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-slate-100 dark:border-slate-800 rounded-[2rem] font-bold text-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all hover:-translate-y-2">
-                Start Learning Free
+              <Link href="/register" className="px-14 py-7 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-2 border-slate-200 dark:border-slate-800 rounded-[2.5rem] font-black text-xl hover:border-indigo-400 transition-all hover:scale-105 active:scale-95 shadow-xl">
+                Try For Free
               </Link>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-24 border-y border-slate-100 dark:border-slate-900 bg-slate-50/50 dark:bg-slate-900/20">
+      {/* Stats Section with Glassmorphism */}
+      <section className="py-24 z-10 relative">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { label: "Active Students", value: "10M+" },
-              { label: "Premium Courses", value: "1.2K+" },
-              { label: "Expert Mentors", value: "450+" },
-              { label: "Success Rate", value: "98%" }
+              { label: "Active Students", value: "10M+", color: "text-indigo-500" },
+              { label: "Premium Courses", value: "1.2K+", color: "text-fuchsia-500" },
+              { label: "Expert Mentors", value: "450+", color: "text-cyan-500" },
+              { label: "Success Rate", value: "98%", color: "text-amber-500" }
             ].map((stat, i) => (
               <motion.div 
                 key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="text-center"
+                className="glass-panel rounded-[2rem] p-8 text-center border border-white/40 shadow-2xl"
               >
-                <div className="text-5xl font-black text-indigo-600 mb-3">{stat.value}</div>
-                <div className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">{stat.label}</div>
+                <div className={`text-5xl font-black ${stat.color} mb-3 tabular-nums`}>{stat.value}</div>
+                <div className="text-xs font-black text-slate-400 uppercase tracking-[0.3em]">{stat.label}</div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section className="py-40">
+      {/* Features Grid - Improved Cards */}
+      <section className="py-40 z-10 relative">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-24">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Why Choose LearnWithSky?</h2>
-            <p className="text-slate-500 dark:text-slate-400 text-xl max-w-2xl mx-auto">We combine cutting-edge technology with world-class education to help you reach your goals.</p>
+          <div className="text-center mb-32">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white mb-8"
+            >
+              Why LearnWithSky?
+            </motion.h2>
+            <p className="text-slate-500 dark:text-slate-400 text-2xl max-w-2xl mx-auto font-medium">Premium features for a premium learning experience.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-12">
             {[
               { 
-                title: "Cinematic Learning", 
-                desc: "High-definition video courses filmed in world-class studios for an immersive experience.", 
-                icon: (
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                ),
-                color: "bg-blue-500"
+                title: "Cinematic Content", 
+                desc: "4K video production with studio-quality audio and expert editing.", 
+                icon: "🎬",
+                gradient: "from-blue-500 to-cyan-500"
               },
               { 
-                title: "AI-Powered Mentors", 
-                desc: "Get instant answers to your questions with our integrated AI learning assistant.", 
-                icon: (
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                ),
-                color: "bg-indigo-500"
+                title: "AI Personalization", 
+                desc: "Adaptive learning paths that evolve based on your performance.", 
+                icon: "⚡",
+                gradient: "from-indigo-500 to-violet-500"
               },
               { 
-                title: "Global Credentials", 
-                desc: "Earn certificates recognized by the world's leading technology companies.", 
-                icon: (
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                ),
-                color: "bg-violet-500"
+                title: "Elite Certification", 
+                desc: "Industry-standard credentials verified on the blockchain.", 
+                icon: "🏆",
+                gradient: "from-amber-400 to-orange-500"
               }
             ].map((feature, idx) => (
               <motion.div 
                 key={idx} 
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.15, duration: 0.6 }}
-                whileHover={{ y: -10 }}
-                className="premium-card group"
+                transition={{ delay: idx * 0.2, duration: 0.8 }}
+                whileHover={{ y: -20, rotate: idx % 2 === 0 ? 1 : -1 }}
+                className="premium-card relative group cursor-default h-full"
               >
-                <div className={`w-20 h-20 ${feature.color} text-white rounded-[1.5rem] flex items-center justify-center mb-10 shadow-2xl shadow-${feature.color.split('-')[1]}-500/30 group-hover:scale-110 transition-transform duration-500`}>
+                <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${feature.gradient} opacity-5 blur-3xl group-hover:opacity-20 transition-opacity`}></div>
+                <div className={`w-20 h-20 bg-gradient-to-br ${feature.gradient} text-white rounded-[1.5rem] flex items-center justify-center mb-10 text-4xl shadow-2xl transition-transform duration-500 group-hover:rotate-12`}>
                   {feature.icon}
                 </div>
                 <h3 className="text-3xl font-black mb-6 text-slate-900 dark:text-white leading-tight">{feature.title}</h3>
-                <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">{feature.desc}</p>
+                <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed font-medium">{feature.desc}</p>
               </motion.div>
             ))}
           </div>

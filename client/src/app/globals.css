@@ -2,15 +2,20 @@
 
 @theme {
   --font-sans: 'Outfit', 'Inter', sans-serif;
-  --color-indigo-600: #4f46e5;
-  --color-violet-600: #7c3aed;
+  --color-indigo-600: #6366f1;
+  --color-indigo-500: #818cf8;
+  --color-violet-600: #8b5cf6;
+  --color-violet-500: #a78bfa;
   --color-rose-500: #f43f5e;
+  --color-cyan-400: #22d3ee;
+  --color-amber-400: #fbbf24;
 }
 
 :root {
-  --background: #ffffff;
+  --background: #fdfdff;
   --foreground: #020617;
-  --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+  --secondary-gradient: linear-gradient(135deg, #0ea5e9 0%, #22d3ee 100%);
   --surface: #ffffff;
   --border: #e2e8f0;
 }
@@ -45,9 +50,15 @@ body {
 }
 
 .text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-600;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500;
   background-size: 200% auto;
-  animation: gradient 5s linear infinite;
+  animation: gradient 3s ease infinite;
+}
+
+.text-gradient-gold {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-yellow-500 to-amber-600;
+  background-size: 200% auto;
+  animation: gradient 3s ease infinite;
 }
 
 @keyframes gradient {

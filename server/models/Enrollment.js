@@ -16,7 +16,13 @@ const enrollmentSchema = new mongoose.Schema({
         ref: 'Lesson' 
     }],
     progress: { type: Number, default: 0 },
-    enrolledAt: { type: Date, default: Date.now }
+    enrolledAt: { type: Date, default: Date.now },
+    paymentStatus: { 
+        type: String, 
+        enum: ['pending', 'completed'], 
+        default: 'pending' 
+    },
+    stripeSessionId: { type: String }
 }, { timestamps: true });
 
 // Ensure unique enrollment per user/course

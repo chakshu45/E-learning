@@ -89,102 +89,116 @@ const topics = [
 export default function DevOpsPage() {
     const [activeTopic, setActiveTopic] = useState(topics[0].id);
 
+    const handleDownload = () => {
+        const link = document.createElement('a');
+        link.href = '/pdfs/docker-cheat-sheet.pdf';
+        link.download = 'DevOps_Docker_Cheat_Sheet.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
-        <div className="min-h-screen pt-24 pb-20 bg-slate-50 dark:bg-slate-950">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen pt-24 pb-20 bg-[#fdfdff] dark:bg-slate-950">
+            <div className="max-w-7xl mx-auto px-4">
                 {/* Hero Section */}
-                <header className="mb-16 text-center">
+                <header className="mb-20 text-center">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-widest text-indigo-600 uppercase bg-indigo-100 rounded-full dark:bg-indigo-900/30 dark:text-indigo-400"
+                        className="inline-block px-4 py-1 mb-6 text-xs font-black tracking-widest text-indigo-600 uppercase bg-indigo-50 rounded-full dark:bg-indigo-900/30"
                     >
                         Study Materials
                     </motion.div>
                     <motion.h1 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-5xl md:text-6xl font-black text-slate-900 dark:text-white leading-tight"
+                        className="text-5xl md:text-7xl font-black text-slate-900 dark:text-white leading-tight mb-6"
                     >
-                        Master <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">DevOps</span> <br className="hidden md:block" /> & Cloud Engineering
+                        DevOps & <span className="text-gradient">Cloud</span> Engineering
                     </motion.h1>
                     <motion.p 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="mt-6 text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto"
+                        className="mt-6 text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-medium"
                     >
-                        Your structured guide to the modern cloud landscape, curated from industry-standard resources like W3Schools and GeeksforGeeks.
+                        Your structured guide to the modern cloud landscape, curated from industry-standard resources.
                     </motion.p>
                 </header>
 
-                {/* Roadmap Stepper */}
+                {/* Cheat Sheet Section */}
                 <section className="mb-24">
-                    <h2 className="text-3xl font-bold mb-10 text-slate-900 dark:text-white flex items-center space-x-3">
-                        <span className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center">1</span>
-                        <span>Learning Roadmap</span>
-                    </h2>
-                    <div className="relative">
-                        <div className="hidden lg:block absolute top-1/2 left-0 w-full h-1 bg-slate-200 dark:bg-slate-800 -translate-y-1/2"></div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
-                            {roadmap.map((step, i) => (
-                                <motion.div 
-                                    key={i} 
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: i * 0.1 }}
-                                    className="relative z-10 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm"
-                                >
-                                    <div className="w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs font-bold mb-4">
-                                        {i + 1}
-                                    </div>
-                                    <h3 className="font-bold text-slate-900 dark:text-white mb-1">{step.title}</h3>
-                                    <p className="text-xs text-slate-500 mb-3">{step.desc}</p>
-                                    <span className="text-[10px] font-black uppercase px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-500 rounded">
-                                        {step.status}
-                                    </span>
-                                </motion.div>
-                            ))}
+                    <div className="premium-card bg-gradient-to-r from-indigo-600 to-violet-600 text-white p-10 flex flex-col md:flex-row items-center justify-between border-none shadow-2xl shadow-indigo-500/40">
+                        <div className="mb-8 md:mb-0">
+                            <h2 className="text-4xl font-black mb-4">DevOps Mastery Cheat Sheet</h2>
+                            <p className="text-indigo-100 text-lg max-w-xl">A complete overview of Docker, Kubernetes, and AWS CLI commands in a printable PDF.</p>
                         </div>
+                        <button 
+                            onClick={handleDownload}
+                            className="px-10 py-5 bg-white text-indigo-600 font-black text-xl rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl"
+                        >
+                            Download PDF 📄
+                        </button>
+                    </div>
+                </section>
+
+                {/* Roadmap Stepper */}
+                <section className="mb-32">
+                    <h2 className="text-3xl font-black mb-12 text-slate-900 dark:text-white">Learning Roadmap</h2>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {roadmap.map((step, i) => (
+                            <motion.div 
+                                key={i} 
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: i * 0.1 }}
+                                className="glass-panel p-8 rounded-[2rem] border-slate-100 dark:border-slate-800"
+                            >
+                                <div className="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold mb-6">
+                                    {i + 1}
+                                </div>
+                                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">{step.title}</h3>
+                                <p className="text-slate-500 text-sm font-medium">{step.desc}</p>
+                                <span className="mt-4 inline-block text-[10px] font-black uppercase px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-500 rounded">
+                                    {step.status}
+                                </span>
+                            </motion.div>
+                        ))}
                     </div>
                 </section>
 
                 {/* Content Explorer */}
-                <section className="grid lg:grid-cols-3 gap-12">
-                    {/* Sidebar */}
+                <section className="grid lg:grid-cols-3 gap-16">
                     <div className="space-y-4">
-                        <h2 className="text-3xl font-bold mb-8 text-slate-900 dark:text-white flex items-center space-x-3">
-                            <span className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center">2</span>
-                            <span>Core Topics</span>
-                        </h2>
+                        <h3 className="text-2xl font-black mb-8 text-slate-900 dark:text-white">Core Topics</h3>
                         {topics.map(topic => (
                             <button
                                 key={topic.id}
                                 onClick={() => setActiveTopic(topic.id)}
-                                className={`w-full text-left p-6 rounded-2xl border transition-all ${
+                                className={`w-full text-left p-6 rounded-2xl border-2 transition-all ${
                                     activeTopic === topic.id 
-                                    ? "bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-500/30" 
-                                    : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-indigo-400"
+                                    ? "bg-white dark:bg-slate-900 border-indigo-600 shadow-xl" 
+                                    : "bg-transparent border-slate-100 dark:border-slate-800 text-slate-500"
                                 }`}
                             >
-                                <h3 className="font-bold">{topic.title}</h3>
+                                <h4 className="font-black">{topic.title}</h4>
                             </button>
                         ))}
                     </div>
 
-                    {/* Main Content Area */}
                     <div className="lg:col-span-2">
                         <motion.div
                             key={activeTopic}
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
-                            className="bg-white dark:bg-slate-900 p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm min-h-[400px]"
+                            className="bg-white dark:bg-slate-900 p-12 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl min-h-[400px]"
                         >
-                            <h2 className="text-3xl font-bold mb-6 text-slate-900 dark:text-white">
+                            <h2 className="text-4xl font-black mb-8 text-slate-900 dark:text-white">
                                 {topics.find(t => t.id === activeTopic)?.title}
                             </h2>
                             <div 
-                                className="prose prose-slate dark:prose-invert max-w-none"
+                                className="prose prose-indigo dark:prose-invert max-w-none"
                                 dangerouslySetInnerHTML={{ __html: topics.find(t => t.id === activeTopic)?.content || "" }}
                             />
                         </motion.div>
