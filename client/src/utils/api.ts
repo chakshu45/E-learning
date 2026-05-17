@@ -17,6 +17,12 @@ export const fetchData = async (endpoint: string, options: RequestInit = {}) => 
 
     const data = await response.json();
     if (!response.ok) {
+        if (response.status === 401) {
+            if (typeof window !== 'undefined') {
+                localStorage.removeItem('sky_user');
+                window.location.href = '/login';
+            }
+        }
         throw new Error(data.message || 'Something went wrong');
     }
     return data;

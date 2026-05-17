@@ -105,7 +105,7 @@ export default function SpringBootPage() {
                             <h2 className="text-4xl font-black mb-4">Spring Boot Quick Reference</h2>
                             <p className="text-green-100 text-lg max-w-xl">Every annotation, starter, and command you need for daily development.</p>
                         </div>
-                        <button 
+                        <button
                             onClick={handleDownload}
                             className="px-10 py-5 bg-white text-green-600 font-black text-xl rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl"
                         >
@@ -119,7 +119,7 @@ export default function SpringBootPage() {
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {roadmap.map((step, i) => (
                             <motion.div key={i} whileHover={{ y: -5 }} className="glass-panel p-8 rounded-[2rem] border-slate-100 dark:border-slate-800">
-                                <div className="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold mb-6">{i+1}</div>
+                                <div className="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold mb-6">{i + 1}</div>
                                 <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">{step.title}</h3>
                                 <p className="text-slate-500 text-sm font-medium">{step.desc}</p>
                             </motion.div>
@@ -134,11 +134,10 @@ export default function SpringBootPage() {
                             <button
                                 key={topic.id}
                                 onClick={() => setActiveTopic(topic.id)}
-                                className={`w-full text-left p-6 rounded-2xl border-2 transition-all ${
-                                    activeTopic === topic.id 
-                                    ? "bg-white dark:bg-slate-900 border-green-600 shadow-xl" 
+                                className={`w-full text-left p-6 rounded-2xl border-2 transition-all ${activeTopic === topic.id
+                                    ? "bg-white dark:bg-slate-900 border-green-600 shadow-xl"
                                     : "bg-transparent border-slate-100 dark:border-slate-800 text-slate-500"
-                                }`}
+                                    }`}
                             >
                                 <h4 className="font-black">{topic.title}</h4>
                             </button>
@@ -154,7 +153,7 @@ export default function SpringBootPage() {
                             <h2 className="text-4xl font-black mb-8 text-slate-900 dark:text-white">
                                 {topics.find(t => t.id === activeTopic)?.title}
                             </h2>
-                            <div 
+                            <div
                                 className="prose prose-green dark:prose-invert max-w-none"
                                 dangerouslySetInnerHTML={{ __html: topics.find(t => t.id === activeTopic)?.content || "" }}
                             />

@@ -159,6 +159,19 @@ export default function OSPage() {
                         </motion.div>
                     </div>
                 </section>
+
+                {/* Footer Call to Action */}
+                <footer className="mt-32 text-center border-t border-slate-200 dark:border-slate-800 pt-20">
+                    <p className="text-slate-500 dark:text-slate-400 mb-8">Ready to test your knowledge?</p>
+                    <div className="flex flex-wrap justify-center gap-4">
+                        <Link href="/courses" className="px-8 py-4 bg-orange-600 text-white font-bold rounded-2xl hover:bg-orange-700 transition-all">
+                            Enroll in Operating Systems Bootcamp
+                        </Link>
+                        <a href="https://www.geeksforgeeks.org/operating-systems/" target="_blank" className="px-8 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-bold rounded-2xl hover:bg-slate-50 transition-all">
+                            Visit GeeksforGeeks
+                        </a>
+                    </div>
+                </footer>
             </div>
         </div>
     );

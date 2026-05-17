@@ -34,6 +34,7 @@ const enrollmentRoutes = require('./routes/enrollmentRoutes');
 const lessonRoutes = require('./routes/lessonRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const chatRoutes = require('./routes/chatRoutes');
+const testRoutes = require('./routes/testRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/courses', courseRoutes);
@@ -41,6 +42,7 @@ app.use('/api/enroll', enrollmentRoutes);
 app.use('/api/lessons', lessonRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/tests', testRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {

@@ -27,6 +27,11 @@ const createCheckoutSession = async (req, res) => {
     }
 
     try {
+        if (process.env.STRIPE_SECRET_KEY === 'sk_test_placeholder') {
+            const mockUrl = `${process.env.CLIENT_URL || 'http://localhost:3000'}/payment/mock-checkout?course_id=${courseId}`;
+            return res.json({ id: 'mock_session_' + Date.now(), url: mockUrl });
+        }
+
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [
@@ -76,6 +81,11 @@ const verifyPayment = async (req, res) => {
     const { sessionId } = req.body;
 
     try {
+        if (sessionId.startsWith('mock_session_')) {
+            // For mock, we'll just return success
+            return res.json({ success: true, message: 'Mock payment verified' });
+        }
+
         const session = await stripe.checkout.sessions.retrieve(sessionId);
 
         if (session.payment_status === 'paid') {

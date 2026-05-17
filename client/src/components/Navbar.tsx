@@ -3,13 +3,72 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
+import { fetchData } from '@/utils/api';
 import { motion, AnimatePresence } from 'framer-motion';
+
+const programsData: Record<string, { title: string; href: string }[]> = {
+    "Job Seeker's Package": [
+        { title: "SOC(Security Operations Center) Job Seeker's Package", href: "#" },
+        { title: "IT Auditing & GRC Job Seeker's Package", href: "#" },
+        { title: "Scrum Master Job Seeker's Package", href: "#" },
+        { title: "Project Management Professional Job Seeker's Package", href: "#" },
+        { title: "Devops Job Seeker's Package", href: "#" },
+        { title: "Cyber Security Job Seeker's Package", href: "#" },
+        { title: "Azure Job Seeker's Package", href: "#" },
+        { title: "AWS Job Seeker's Package", href: "#" }
+    ],
+    "AI & Data Science": [
+        { title: "Data Science Masters", href: "#" },
+        { title: "Machine Learning Bootcamp", href: "#" }
+    ],
+    "Cloud Security": [{ title: "Cloud Security Professional", href: "#" }],
+    "AWS": [{ title: "AWS Solutions Architect", href: "#" }, { title: "AWS Developer Associate", href: "#" }],
+    "Azure": [{ title: "Azure Administrator", href: "#" }],
+    "Cyber Security": [{ title: "Ethical Hacking Expert", href: "#" }],
+    "Google Cloud": [{ title: "GCP Cloud Engineer", href: "#" }],
+    "Database": [{ title: "Database Administration", href: "#" }],
+    "Programming": [{ title: "Full Stack Web Development", href: "#" }, { title: "Python Programming", href: "#" }],
+    "Devops": [{ title: "DevOps Engineer Certification", href: "#" }],
+    "RPA": [{ title: "RPA Developer Foundation", href: "#" }],
+    "Management": [{ title: "IT Service Management", href: "#" }]
+};
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
     const { user, logout } = useAuth();
+    const router = useRouter();
+    
+    // Mega menu state
+    const [megaMenuOpen, setMegaMenuOpen] = useState(false);
+    const [activeCategory, setActiveCategory] = useState("Job Seeker's Package");
+
+    const handleMegaMenuEnroll = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        setMegaMenuOpen(false); // Close menu
+        
+        if (!user) {
+            router.push('/login');
+            return;
+        }
+        
+        try {
+            // Fetch courses to get a valid course ID for the mock enrollment flow
+            // Since the mega menu has static dummy data, we'll map them to the first available real course
+            // so the payment flow and dashboard addition works without crashing.
+            const courses = await fetchData('/courses');
+            if (courses && courses.length > 0) {
+                const courseId = courses[0]._id;
+                router.push(`/payment/mock-checkout?course_id=${courseId}`);
+            } else {
+                alert("No courses available to enroll right now.");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
@@ -34,9 +93,6 @@ const Navbar = () => {
     }, []);
 
     const navLinks = [
-        { name: "Courses", href: "/courses" },
-        { name: "Study Material", href: "/subjects" },
-        { name: "Practice", href: "/practice" },
         { name: "Dashboard", href: "/dashboard" }
     ];
 
@@ -68,6 +124,76 @@ const Navbar = () => {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-8">
+                        {/* Programs Mega Menu Trigger */}
+                        <div 
+                            className="relative"
+                            onMouseEnter={() => setMegaMenuOpen(true)}
+                            onMouseLeave={() => setMegaMenuOpen(false)}
+                        >
+                            <button className="flex items-center space-x-2 px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-lg font-bold text-sm hover:opacity-90 transition-opacity">
+                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                                <span>Programs</span>
+                            </button>
+
+                            {/* Mega Menu Dropdown */}
+                            <AnimatePresence>
+                                {megaMenuOpen && (
+                                    <motion.div 
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: 10 }}
+                                        className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[900px] bg-white dark:bg-slate-900 rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.25)] border border-slate-200 dark:border-slate-800 flex overflow-hidden z-50 cursor-default"
+                                    >
+                                        {/* Left Sidebar */}
+                                        <div className="w-1/3 bg-slate-50 dark:bg-slate-800/50 border-r border-slate-200 dark:border-slate-800 py-4 flex flex-col h-[500px] overflow-y-auto custom-scrollbar">
+                                            {Object.keys(programsData).map((category) => (
+                                                <button
+                                                    key={category}
+                                                    onMouseEnter={() => setActiveCategory(category)}
+                                                    className={`text-left px-6 py-3 text-sm font-bold transition-all ${
+                                                        activeCategory === category 
+                                                        ? "bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 border-l-4 border-indigo-600" 
+                                                        : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border-l-4 border-transparent"
+                                                    }`}
+                                                >
+                                                    {category}
+                                                </button>
+                                            ))}
+                                        </div>
+
+                                        {/* Right Content Area */}
+                                        <div className="w-2/3 p-6 bg-white dark:bg-slate-900 h-[500px] overflow-y-auto custom-scrollbar">
+                                            <div className="grid grid-cols-2 gap-4">
+                                                {programsData[activeCategory]?.map((item, idx) => (
+                                                    <div key={idx} className="group border border-slate-200 dark:border-slate-800 rounded-xl p-4 hover:border-indigo-500 hover:shadow-lg transition-all flex flex-col justify-between h-full bg-white dark:bg-slate-800/50">
+                                                        <div className="flex items-start space-x-3 mb-4">
+                                                            <div className="w-12 h-12 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex-shrink-0 flex items-center justify-center text-indigo-600">
+                                                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                                                            </div>
+                                                            <h4 className="font-bold text-sm text-slate-900 dark:text-white leading-tight group-hover:text-indigo-600 transition-colors">
+                                                                {item.title}
+                                                            </h4>
+                                                        </div>
+                                                        <button 
+                                                            onClick={handleMegaMenuEnroll} 
+                                                            className="w-full text-center py-2 bg-slate-900 dark:bg-indigo-600 text-white rounded-lg text-xs font-bold hover:bg-indigo-600 dark:hover:bg-indigo-500 transition-colors"
+                                                        >
+                                                            Enroll Now
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                                {(!programsData[activeCategory] || programsData[activeCategory].length === 0) && (
+                                                    <div className="col-span-2 text-center text-slate-500 py-10">
+                                                        Coming Soon!
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
                         {navLinks.map((link, i) => (
                             <motion.div
                                 key={link.name}

@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { fetchData } from "@/utils/api";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 function PaymentSuccessContent() {
     const router = useRouter();

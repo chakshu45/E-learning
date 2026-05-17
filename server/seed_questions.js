@@ -1,7 +1,6 @@
-const User = require('./models/User');
-const Course = require('./models/Course');
-const Lesson = require('./models/Lesson');
+const mongoose = require('mongoose');
 const Question = require('./models/Question');
+require('dotenv').config();
 
 const questions = [
     // Data Structures
@@ -70,6 +69,30 @@ const questions = [
         correctAnswer: 2,
         explanation: '3NF requires that all non-key attributes are functionally dependent only on the primary key, eliminating transitive dependencies.',
         tags: ['Normalization', '3NF']
+    },
+    // Computer Networks
+    {
+        subject: 'Computer Networks',
+        difficulty: 'Easy',
+        text: 'Which layer of the OSI model is responsible for routing packets across different networks?',
+        options: ['Data Link Layer', 'Transport Layer', 'Network Layer', 'Session Layer'],
+        correctAnswer: 2,
+        explanation: 'The Network Layer (Layer 3) handles routing and logical addressing (IP addresses).',
+        tags: ['OSI', 'Network Layer', 'Routing']
+    },
+    {
+        subject: 'Computer Networks',
+        difficulty: 'Medium',
+        text: 'What is the primary purpose of the ARP protocol?',
+        options: [
+            'Resolving IP addresses to MAC addresses',
+            'Mapping domain names to IP addresses',
+            'Assigning dynamic IP addresses to devices',
+            'Encrypting data for secure transmission'
+        ],
+        correctAnswer: 0,
+        explanation: 'Address Resolution Protocol (ARP) is used to find the hardware (MAC) address of a host from its known IP address.',
+        tags: ['ARP', 'IP', 'MAC']
     },
     // OOPs
     {
@@ -159,6 +182,15 @@ const questions = [
         tags: ['SoftwareEngineering', 'SOLID']
     },
     {
+        subject: 'Software Engineering',
+        difficulty: 'Easy',
+        text: 'What does the "S" in SOLID principles stand for?',
+        options: ['Shared Responsibility', 'Single Responsibility', 'System Scalability', 'Software Stability'],
+        correctAnswer: 1,
+        explanation: 'The Single Responsibility Principle states that a class should have one, and only one, reason to change.',
+        tags: ['SoftwareEngineering', 'SOLID']
+    },
+    {
         subject: 'Data Structures',
         difficulty: 'Easy',
         text: 'Which of the following is a linear data structure?',
@@ -205,117 +237,22 @@ const questions = [
     }
 ];
 
-const seedData = async () => {
+const seedQuestions = async () => {
     try {
-        // Clear existing data
-        await User.deleteMany();
-        await Course.deleteMany();
-        await Lesson.deleteMany();
-        await Question.deleteMany();
-
-        // Create Instructor
-        const instructor = await User.create({
-            name: 'Learn With Sky',
-            email: 'anuj@learnwithsky.com',
-            password: 'password123',
-            role: 'instructor',
-            profileImage: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400'
-        });
-
-
-        // Java Course
-        const javaCourse = await Course.create({
-            title: 'Java Placement Bootcamp 2026',
-            subtitle: 'Master Java from Scratch to Advanced.',
-            description: 'Learn Java syntax, Collections, Multi-threading, and Exception handling. Perfect for campus placements.',
-            price: 2499,
-            originalPrice: 4999,
-            instructor: instructor._id,
-            category: 'Programming',
-            level: 'Beginner',
-            rating: 4.8,
-            isPublished: true
-        });
-
-        // DSA Course
-        const dsaCourse = await Course.create({
-            title: 'Data Structures & Algorithms (DSA) Mastery',
-            subtitle: 'Ace your technical interviews at MAANG.',
-            description: 'Complete DSA course covering Arrays, Linked Lists, Trees, Graphs, and DP. Solving 500+ LeetCode problems.',
-            price: 3499,
-            originalPrice: 6999,
-            instructor: instructor._id,
-            category: 'Computer Science',
-            level: 'Intermediate',
-            rating: 4.9,
-            isPublished: true
-        });
-
-        // Python Course
-        const pythonCourse = await Course.create({
-            title: 'Python for Data Science & AI',
-            subtitle: 'The most versatile language for the future.',
-            description: 'Learn Python, NumPy, Pandas, and Matplotlib. Introduction to Machine Learning and AI models.',
-            price: 1999,
-            originalPrice: 3999,
-            instructor: instructor._id,
-            category: 'Data Science',
-            level: 'Beginner',
-            rating: 4.7,
-            isPublished: true
-        });
-
-        // OOPs Course
-        const oopsCourse = await Course.create({
-            title: 'Object Oriented Programming (OOPs) Design',
-            subtitle: 'Learn to write clean, scalable, and reusable code.',
-            description: 'Master the 4 pillars of OOPs: Encapsulation, Abstraction, Inheritance, and Polymorphism. Design Patterns included.',
-            price: 1499,
-            originalPrice: 2999,
-            instructor: instructor._id,
-            category: 'Software Engineering',
-            level: 'Intermediate',
-            rating: 4.8,
-            isPublished: true
-        });
-
-        // Create some lessons as sample
-        await Lesson.create([
-            { 
-                course: javaCourse._id, 
-                title: 'Introduction to Java Variables', 
-                videoUrl: 'https://www.youtube.com/embed/eIrMbAQSU34', 
-                order: 1, 
-                duration: '15:00',
-                challenge: {
-                    type: 'typing',
-                    question: 'Type the command to declare an integer variable named "x" and assign it the value 10.',
-                    codeTemplate: '// Type here...',
-                    correctAnswer: 'int x = 10;'
-                }
-            },
-            { 
-                course: javaCourse._id, 
-                title: 'Java Data Types', 
-                videoUrl: 'https://www.youtube.com/embed/9TlHvipP5yA', 
-                order: 2, 
-                duration: '20:00',
-                challenge: {
-                    type: 'typing',
-                    question: 'Declare a String variable named "name" and assign it the value "Sky".',
-                    codeTemplate: '// Type here...',
-                    correctAnswer: 'String name = "Sky";'
-                }
-            },
-            { course: dsaCourse._id, title: 'Time Complexity Analysis', videoUrl: 'https://www.youtube.com/embed/9TlHvipP5yA', order: 1, duration: '45:00' }
-        ]);
+        await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/elearning');
+        console.log('Connected to MongoDB for seeding questions...');
         
-        await Question.insertMany(questions);
+        await Question.deleteMany();
+        console.log('Cleared existing questions.');
 
-        console.log('Auto-Seed: Data Seeded Successfully');
+        await Question.insertMany(questions);
+        console.log('Successfully seeded mock questions.');
+        
+        process.exit();
     } catch (error) {
-        console.error(`Auto-Seed Error: ${error.message}`);
+        console.error('Seeding failed:', error);
+        process.exit(1);
     }
 };
 
-module.exports = seedData;
+seedQuestions();
